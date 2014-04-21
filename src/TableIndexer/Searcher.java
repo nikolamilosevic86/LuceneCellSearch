@@ -33,23 +33,19 @@ public class Searcher {
 	 * engine presents pages of size n to the user. The user can then go to the
 	 * next page if interested in the next hits.
 	 * 
-	 * When the query is executed for the first time, then only enough results
-	 * are collected to fill 5 result pages. If the user wants to page beyond
-	 * this limit, then the query is executed another time and all hits are
-	 * collected.
+	 * 
 	 * 
 	 */
 	public static void doPagingSearch(BufferedReader in,
 			IndexSearcher searcher, Query query, int hitsPerPage, boolean raw,
 			boolean interactive) throws IOException {
 
-		// Collect enough docs to show 5 pages
+		// Collect enough docs to show 5000 pages
 		TopDocs results = searcher.search(query, 5000 * hitsPerPage);
 		ScoreDoc[] hits = results.scoreDocs;
 
 		int numTotalHits = results.totalHits;
 		//System.out.println(numTotalHits + " total matching documents");
-
 		int start = 0;
 		int end = Math.min(numTotalHits, hitsPerPage);
 
