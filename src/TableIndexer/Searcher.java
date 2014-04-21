@@ -68,7 +68,7 @@ public class Searcher {
 				hits = searcher.search(query, numTotalHits).scoreDocs;
 			}
 			HashMap<String,Document> res = new HashMap<String,Document>();
-			HashMap<String,ScoreDoc> scoreres = new HashMap<String,ScoreDoc>();
+			HashMap<String,ScoreDoc2> scoreres = new HashMap<String,ScoreDoc2>();
 			for(ScoreDoc hit : hits)
 			{
 				Document doc = searcher.doc(hit.doc);
@@ -78,18 +78,20 @@ public class Searcher {
 				if(res.get(pmc+tableOrder)==null)
 				{
 					res.put(pmc+tableOrder, doc);
-					scoreres.put(pmc+tableOrder, hit);
+					scoreres.put(pmc+tableOrder, new ScoreDoc2(hit));
 				}
 				else
 				{
-					ScoreDoc score = scoreres.get(pmc+tableOrder);
+					ScoreDoc2 score = (ScoreDoc2) scoreres.get(pmc+tableOrder);
 					score.score+=hit.score;
+					score.numOfDocs++;
 				}
 			}
 			int k= 0;
 			hits = new ScoreDoc[scoreres.size()];
-			for (Entry<String, ScoreDoc> mapEntry : scoreres.entrySet()) {
+			for (Entry<String, ScoreDoc2> mapEntry : scoreres.entrySet()) {
 				hits[k] = mapEntry.getValue();
+				hits[k].score = (float) (hits[k].score / (mapEntry.getValue().numOfDocs*0.9));
 			    k++;
 			}
 			System.out.println(k + " total matching documents");
