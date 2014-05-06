@@ -221,18 +221,18 @@ public class Indexer {
 					att.setBoost(1.1f);
 					TextField val = new TextField("value", value,
 							Field.Store.YES);
-					val.setBoost(1.1f);
+					val.setBoost(1.3f);
 					TextField tabname = new TextField("tableName", tableTitle,
 							Field.Store.YES);
-					tabname.setBoost(1.5f);
+					tabname.setBoost(0.7f);
 					TextField tabfoot = new TextField("tableFooter",
 							tableFooter, Field.Store.YES);
-					tabfoot.setBoost(1.2f);
+					tabfoot.setBoost(0.7f);
 					TextField tableOrd = new TextField("tableOrder",
 							tableOrder, Field.Store.YES);
 					TextField doctitle = new TextField("DocumentTitle",
 							documentTitle, Field.Store.YES);
-					doctitle.setBoost(1.0f);
+					doctitle.setBoost(0.5f);
 					TextField pmc = new TextField("PMC", PMC, Field.Store.YES);
 					pmc.setBoost(1.0f);
 
